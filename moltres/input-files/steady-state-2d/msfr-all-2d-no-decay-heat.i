@@ -1,7 +1,7 @@
 flow_velocity=112.75 # cm/s
 pre_flow_velocity=112.75
 nt_scale=1e-14     # neutron flux scaling factor
-pre_scale=1e-9    # precursor scaling factor
+pre_scale=1e-11    # precursor scaling factor
 ini_temp=953     # initial temp
 diri_temp=923    # dirichlet BC temp
 ini_neut=1e14
@@ -9,28 +9,22 @@ ini_neut=1e14
 [GlobalParams]
   num_groups = 6
   num_precursor_groups = 8
-#   num_decay_heat_groups = 3
   temperature = temp
   group_fluxes = 'group1 group2 group3 group4 group5 group6'
   pre_concs = 'pre1 pre2 pre3 pre4 pre5 pre6 pre7 pre8'
-#   heat_concs = 'heat1 heat2 heat3'
   use_exp_form = false
   sss2_input = true
   account_delayed = true
-#   account_decay_heat = true
   integrate_p_by_parts = true
-#   decay_heat_fractions = '.0117 .0129 .0186'
-#   decay_heat_constants = '.1974 .0168 3.58e-4'
   gravity = '0 0 0'
   pspg = true
   supg = true
   alpha = .3333
-  # eigen = true
 []
 
 [Mesh]
-  # file = 'msfr-all-2d_exodus.e' # noalloc queue
-  file = '../msfr-all-2d_exodus.e'
+  file = 'msfr-all-2d-no-decay-heat_exodus.e' # noalloc queue
+  # file = '../msfr-all-2d_exodus.e'
   # file = 'msfr-ins-2d_exodus.e'
 [../]
 
@@ -111,32 +105,6 @@ ini_neut=1e14
     initial_from_file_var = p
     initial_from_file_timestep = LATEST
   [../]
-
-  # Decay heat
-#   [./heat1]
-#     order = CONSTANT
-#     family = MONOMIAL
-#     block = 'core'
-#     scaling = 1
-#     initial_from_file_var = heat1
-#     initial_from_file_timestep = LATEST
-#   [../]
-#   [./heat2]
-#     order = CONSTANT
-#     family = MONOMIAL
-#     block = 'core'
-#     scaling = 1
-#     initial_from_file_var = heat2
-#     initial_from_file_timestep = LATEST
-#   [../]
-#   [./heat3]
-#     order = CONSTANT
-#     family = MONOMIAL
-#     block = 'core'
-#     scaling = 1
-#     initial_from_file_var = heat3
-#     initial_from_file_timestep = LATEST
-#   [../]
 []
 
 [Precursors]
@@ -424,64 +392,6 @@ ini_neut=1e14
     component = 1
     block = 'core'
   [../]
-
-  # Decay heat
-#   [./decay_heat1_time_deriv]
-#     type = ScalarTransportTimeDerivative
-#     variable = heat1
-#     block = 'core'
-#   [../]
-#   [./decay_heat1_source]
-#     type = HeatPrecursorSource
-#     variable = heat1
-#     decay_heat_group_number = 1
-#     block = 'core'
-#   [../]
-#   [./decay_heat1_decay]
-#     type = HeatPrecursorDecay
-#     variable = heat1
-#     decay_heat_group_number = 1
-#     block = 'core'
-#   [../]
-#   [./decay_heat2_time_deriv]
-#     type = ScalarTransportTimeDerivative
-#     variable = heat2
-#     block = 'core'
-#   [../]
-#   [./decay_heat2_source]
-#     type = HeatPrecursorSource
-#     variable = heat2
-#     decay_heat_group_number = 2
-#     block = 'core'
-#   [../]
-#   [./decay_heat2_decay]
-#     type = HeatPrecursorDecay
-#     variable = heat2
-#     decay_heat_group_number = 2
-#     block = 'core'
-#   [../]
-#   [./decay_heat3_time_deriv]
-#     type = ScalarTransportTimeDerivative
-#     variable = heat3
-#     block = 'core'
-#   [../]
-#   [./decay_heat3_source]
-#     type = HeatPrecursorSource
-#     variable = heat3
-#     decay_heat_group_number = 3
-#     block = 'core'
-#   [../]
-#   [./decay_heat3_decay]
-#     type = HeatPrecursorDecay
-#     variable = heat3
-#     decay_heat_group_number = 3
-#     block = 'core'
-#   [../]
-#   [./decay_heat_temp_source]
-#     type = DecayHeatSource
-#     variable = temp
-#     block = 'core'
-#   [../]
 []
 
 [DGKernels]
@@ -549,56 +459,6 @@ ini_neut=1e14
     sigma = 6
     block = 'core'
   [../]
-
-  # Decay heat
-#   [./diff_heat1]
-#     type = DGDiffusion
-#     variable = heat1
-#     diff = 0.47
-#     epsilon = -1
-#     sigma = 6
-#     block = 'core'
-#   [../]
-#   [./diff_heat2]
-#     type = DGDiffusion
-#     variable = heat2
-#     diff = 0.47
-#     epsilon = -1
-#     sigma = 6
-#     block = 'core'
-#   [../]
-#   [./diff_heat3]
-#     type = DGDiffusion
-#     variable = heat3
-#     diff = 0.47
-#     epsilon = -1
-#     sigma = 6
-#     block = 'core'
-#   [../]
-#   [./decay_heat1_convection]
-#     type = DGCoupledAdvection
-#     variable = heat1
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     block = 'core'
-#   [../]
-#   [./decay_heat2_convection]
-#     type = DGCoupledAdvection
-#     variable = heat2
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     block = 'core'
-#   [../]
-#   [./decay_heat3_convection]
-#     type = DGCoupledAdvection
-#     variable = heat3
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     block = 'core'
-#   [../]
 []
 
 [Materials]
@@ -779,59 +639,6 @@ ini_neut=1e14
     vvel = uy
     # wvel = uz
   [../]
-
-  # Decay heat
-#   [./decay_heat1_inflow]
-#     type = PostprocessorCoupledInflowBC
-#     postprocessor = inlet_decay_heat1
-#     variable = heat1
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     boundary = 'core_inlet'
-#   [../]
-#   [./decay_heat1_outflow]
-#     type = CoupledOutflowBC
-#     variable = heat1
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     boundary = 'core_outlet'
-#   [../]
-#   [./decay_heat2_inflow]
-#     type = PostprocessorCoupledInflowBC
-#     postprocessor = inlet_decay_heat2
-#     variable = heat2
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     boundary = 'core_inlet'
-#   [../]
-#   [./decay_heat2_outflow]
-#     type = CoupledOutflowBC
-#     variable = heat2
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     boundary = 'core_outlet'
-#   [../]
-#   [./decay_heat3_inflow]
-#     type = PostprocessorCoupledInflowBC
-#     postprocessor = inlet_decay_heat3
-#     variable = heat3
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     boundary = 'core_inlet'
-#   [../]
-#   [./decay_heat3_outflow]
-#     type = CoupledOutflowBC
-#     variable = heat3
-#     uvel = ux
-#     vvel = uy
-#     # wvel = uz
-#     boundary = 'core_outlet'
-#   [../]
 []
 
 [Executioner]
@@ -843,11 +650,8 @@ ini_neut=1e14
   # automatic_scaling = true
   # compute_scaling_once = false
 
-  # nl_rel_tol = 1e-20
-  # nl_abs_tol = 1
-
   nl_rel_tol = 1e-8
-  nl_abs_tol = 1e-6
+  nl_abs_tol = 1e-1
 
   solve_type = 'NEWTON'
   petsc_options = '-snes_converged_reason -ksp_converged_reason -snes_linesearch_monitor'
@@ -861,11 +665,11 @@ ini_neut=1e14
   l_max_its = 50
 
   dtmin = 1e-6
-  dtmax = .5
+  dtmax = 2e-2
   # dt = 1e-3
   [./TimeStepper]
     type = IterationAdaptiveDT
-    dt = 1e-5 # 1e-4
+    dt = 1e-6 # 1e-4
     cutback_factor = .5
     growth_factor = 1.2
     optimal_iterations = 20
@@ -925,22 +729,11 @@ ini_neut=1e14
     value_type = 'max'
     outputs = 'exodus console csv'
   [../]
-  # [./temp_blanket]
-  #   type = ElementAverageValue
-  #   variable = temp
-  #   block = 'blanket'
-  #   outputs = 'exodus console csv'
-  # [../]
   [./heat_core]
     type = ElmIntegTotFissHeatPostprocessor
     block = 'core'
     outputs = 'exodus'
   [../]
-  # [./heat_blanket]
-  #   type = ElmIntegTotFissHeatPostprocessor
-  #   block = 'blanket'
-  #   outputs = 'exodus'
-  # [../]
   [./heat]
     type = ElmIntegTotFissHeatPostprocessor
     outputs = 'csv'
@@ -961,35 +754,6 @@ ini_neut=1e14
     value2 = 'inlet_mean_temp'
     outputs = 'csv console'
   [../]
-
-  # Decay heat
-#   [./outlet_decay_heat1]
-#     type = SideAverageValue
-#     variable = heat1
-#     boundary = 'core_outlet'
-#   [../]
-#   [./inlet_decay_heat1]
-#     type = Receiver
-#     execute_on = 'nonlinear'
-#   [../]
-#   [./outlet_decay_heat2]
-#     type = SideAverageValue
-#     variable = heat2
-#     boundary = 'core_outlet'
-#   [../]
-#   [./inlet_decay_heat2]
-#     type = Receiver
-#     execute_on = 'nonlinear'
-#   [../]
-#   [./outlet_decay_heat3]
-#     type = SideAverageValue
-#     variable = heat3
-#     boundary = 'core_outlet'
-#   [../]
-#   [./inlet_decay_heat3]
-#     type = Receiver
-#     execute_on = 'nonlinear'
-#   [../]
 []
 
 [Outputs]
@@ -1037,95 +801,5 @@ ini_neut=1e14
     to_postprocessor = coreEndTemp
     direction = to_multiapp
   [../]
-
-  # Decay heat
-#   [./from_loop_heat1]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = loopApp
-#     from_postprocessor = inlet_decay_heat1
-#     to_postprocessor = inlet_decay_heat1
-#     direction = from_multiapp
-#     reduction_type = maximum
-#   [../]
-#   [./to_loop_heat1]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = loopApp
-#     from_postprocessor = outlet_decay_heat1
-#     to_postprocessor = outlet_decay_heat1
-#     direction = to_multiapp
-#   [../]
-#   [./from_loop_heat2]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = loopApp
-#     from_postprocessor = inlet_decay_heat2
-#     to_postprocessor = inlet_decay_heat2
-#     direction = from_multiapp
-#     reduction_type = maximum
-#   [../]
-#   [./to_loop_heat2]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = loopApp
-#     from_postprocessor = outlet_decay_heat2
-#     to_postprocessor = outlet_decay_heat2
-#     direction = to_multiapp
-#   [../]
-#   [./from_loop_heat3]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = loopApp
-#     from_postprocessor = inlet_decay_heat3
-#     to_postprocessor = inlet_decay_heat3
-#     direction = from_multiapp
-#     reduction_type = maximum
-#   [../]
-#   [./to_loop_heat3]
-#     type = MultiAppPostprocessorTransfer
-#     multi_app = loopApp
-#     from_postprocessor = outlet_decay_heat3
-#     to_postprocessor = outlet_decay_heat3
-#     direction = to_multiapp
-#   [../]
 []
 
-[ICs]
-#  [./temp_ic]
-#    type = ConstantIC
-#    variable = temp
-#    value = ${ini_temp}
-#  [../]
-#  [./group1_ic]
-#    type = ConstantIC
-#    variable = group1
-#    value = ${ini_neut}
-#    block = 'core'
-#  [../]
-#  [./group2_ic]
-#    type = ConstantIC
-#    variable = group2
-#    value = ${ini_neut}
-#    block = 'core'
-#  [../]
-#  [./group3_ic]
-#    type = ConstantIC
-#    variable = group3
-#    value = ${ini_neut}
-#    block = 'core'
-#  [../]
-#  [./group4_ic]
-#    type = ConstantIC
-#    variable = group4
-#    value = ${ini_neut}
-#    block = 'core'
-#  [../]
-#  [./group5_ic]
-#    type = ConstantIC
-#    variable = group5
-#    value = ${ini_neut}
-#    block = 'core'
-#  [../]
-#  [./group6_ic]
-#    type = ConstantIC
-#    variable = group6
-#    value = ${ini_neut}
-#    block = 'core'
-#  [../]
-[]

@@ -1,7 +1,7 @@
 flow_velocity=112.75 # cm/s
 pre_flow_velocity=112.75
 nt_scale=1e-14     # neutron flux scaling factor
-pre_scale=1e-9    # precursor scaling factor
+pre_scale=1e-11    # precursor scaling factor
 ini_temp=953     # initial temp
 diri_temp=923    # dirichlet BC temp
 ini_neut=1e14
@@ -861,11 +861,11 @@ ini_neut=1e14
   l_max_its = 50
 
   dtmin = 1e-6
-  dtmax = .5
+  dtmax = 2e-2
   # dt = 1e-3
   [./TimeStepper]
     type = IterationAdaptiveDT
-    dt = .2
+    dt = 1e-6
     cutback_factor = .5
     growth_factor = 1.1
     optimal_iterations = 20
@@ -1003,7 +1003,6 @@ ini_neut=1e14
     type = Checkpoint
     num_files = 2
     interval = 3
-    end_time = 2000
   [../]
 []
 
