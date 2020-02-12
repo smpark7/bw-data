@@ -8,7 +8,13 @@ set title "MSFR full core"
 
 % --- Fuel salt
 
-mat fuel8	-4.2775		tmp 800
+mat fuel800	-4.2775		tmp 800
+92233.08c       -0.0665836              % U-233
+90232.08c       -0.5170783              % Th-232
+3007.08c        -0.0607572              % Li-7
+9019.08c        -0.3555809              % F-19
+
+mat fuel850     -4.2334         tmp 850
 92233.08c       -0.0665836              % U-233
 90232.08c       -0.5170783              % Th-232
 3007.08c        -0.0607572              % Li-7
@@ -22,7 +28,12 @@ mat fuel9     	-4.1249 	tmp 973
 
 % --- Blanket salt
 
-mat blanket8     -4.2775         tmp 800
+mat blanket800     -4.2775         tmp 800
+90232.08c       -0.5835662              % Th-232
+3007.08c        -0.0606484              % Li-7
+9019.08c        -0.3557854              % F-19
+
+mat blanket850     -4.2334         tmp 850
 90232.08c       -0.5835662              % Th-232
 3007.08c        -0.0606484              % Li-7
 9019.08c        -0.3557854              % F-19
@@ -34,7 +45,78 @@ mat blanket9     -4.1249 	tmp 973
 
 % --- Structural material
 
-mat struc8      -10             tmp 800
+mat struc800      -10             tmp 800
+
+% Ni
+28058.08c 54.074843
+28060.08c 20.829533
+28061.08c 0.905445
+28062.08c 2.886956
+28064.08c 0.735223
+
+% W
+%74180.08c 0.011971
+74182.08c 2.643640
+74183.08c 1.427566
+74184.08c 3.056646
+74186.08c 2.836177
+
+% Cr
+24050.08c 0.348208
+24052.08c 6.714850
+24053.08c 0.761410
+24054.08c 0.189531
+
+% Mo
+42092.08c 0.107817
+42094.08c 0.067616
+42095.08c 0.116825
+42096.08c 0.122713
+42097.08c 0.070524
+42098.08c 0.178789
+42100.08c 0.071716
+
+% Fe
+26054.08c 0.036940
+26056.08c 0.579885
+26057.08c 0.013392
+26058.08c 0.001782
+
+% Ti
+22046.08c 0.024338
+22047.08c 0.021948
+22048.08c 0.217474
+22049.08c 0.015960
+22050.08c 0.015281
+
+% C
+6000.08c 0.2940000
+
+% Mn
+25055.08c 0.257000
+
+% Si
+14028.08c 0.232321
+14029.08c 0.011841
+14030.08c 0.007837
+
+% Al
+13027.08c 0.052000
+
+% B
+5010.08c 0.006732
+5011.08c 0.026268
+
+% P
+15031.08c 0.023000
+
+% S
+16032.08c 0.003776
+16033.08c 0.000032
+16034.08c 0.000191
+16036.08c 0.000001
+
+mat struc850      -10             tmp 850
 
 % Ni
 28058.08c 54.074843
@@ -178,7 +260,12 @@ mat struc9     	-10 		tmp 973
 
 % --- Boron carbide absorber
 
-mat absorb8     -2.52           tmp 800
+mat absorb800     -2.52           tmp 800
+5010.08c    -14.35110139            % B-10
+5011.08c    -63.91353615            % B-11
+6000.08c    -21.73536246            % Natural C
+
+mat absorb850     -2.52           tmp 850
 5010.08c    -14.35110139            % B-10
 5011.08c    -63.91353615            % B-11
 6000.08c    -21.73536246            % Natural C
@@ -239,12 +326,12 @@ cell 801 0 outside -1001 -2007		% Bottom
 cell 802 0 outside 1008 -2007		% Top
 cell 803 0 outside 2007			% Cylinder
 
-cell 901 1 fuel     -3001	% Fuel material
-cell 902 2 struc	-3001	% Structural material
-cell 903 3 blanket	-3001	% Blanket material
-cell 904 4 absorb	-3001	% Absorber material
-cell 905 5 fuel     -3001   % Inlet/Outlet
-cell 906 6 fuel     -3001   % HX and pump
+cell 901 1 fuel9     -3001	% Fuel material
+cell 902 2 struc9	-3001	% Structural material
+cell 903 3 blanket9	-3001	% Blanket material
+cell 904 4 absorb9	-3001	% Absorber material
+cell 905 5 fuel9     -3001   % Inlet/Outlet
+cell 906 6 fuel9     -3001   % HX and pump
 
 /******************
  * Run parameters *
@@ -325,24 +412,16 @@ set ures 1
 % --- Branch
 
 branch fuel0
-repm fuel9 fuel8
-repm blanket9 blanket8
-repm struc9 struc8
-repm absorb9 absorb8
-stp fuel8    -4.2775    800
-stp blanket8 -4.2775    800
-stp struc8   -10         800
-stp absorb8  -2.52       800
+repm fuel9 fuel800
+repm blanket9 blanket800
+repm struc9 struc800
+repm absorb9 absorb800
 
 branch fuel1
-repm fuel9 fuel8
-repm blanket9 blanket8
-repm struc9 struc8
-repm absorb9 absorb8
-stp fuel8    -4.2334    850
-stp blanket8 -4.2334    850
-stp struc8   -10         850
-stp absorb8  -2.52       850
+repm fuel9 fuel850
+repm blanket9 blanket850
+repm struc9 struc850
+repm absorb9 absorb850
 
 branch fuel2 
 stp fuel9    -4.1893    900
@@ -392,6 +471,18 @@ stp blanket9 -3.9247    1200
 stp struc9   -10         1200
 stp absorb9  -2.52       1200
 
+branch fuel10
+stp fuel9    -3.8806    1250
+stp blanket9 -3.8806    1250
+stp struc9   -10         1250
+stp absorb9  -2.52       1250
+
+branch fuel11
+stp fuel9    -3.8365    1300
+stp blanket9 -3.8365    1300
+stp struc9   -10         1300
+stp absorb9  -2.52       1300
+
 coef 1
 0
-10 fuel0 fuel1 fuel2 fuel3 fuel4 fuel5 fuel6 fuel7 fuel8 fuel9
+12 fuel0 fuel1 fuel2 fuel3 fuel4 fuel5 fuel6 fuel7 fuel8 fuel9 fuel10 fuel11

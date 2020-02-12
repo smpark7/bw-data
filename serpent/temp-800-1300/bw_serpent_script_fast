@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -l nodes=32:ppn=32:xe
-#PBS -l walltime=00:30:00
+#PBS -l walltime=00:45:00
 #PBS -N full_core
 #PBS -j oe
 #PBS -q noalloc
@@ -41,6 +41,6 @@ cd $PBS_O_WORKDIR
 ### NOTE: (the "in" file must exist for input)
 module swap PrgEnv-cray PrgEnv-gnu
 export OMP_NUM_THREADS=32
-aprun -n 32 -d 32  /projects/sciteam/bahg/serpent30/src/sss2 -omp 32 /u/sciteam/park2/masters/serpent/ures/msfr-full-core-temp-800-1300
+aprun -n 32 -d 32  /projects/sciteam/bahg/serpent30/src/sss2 -omp 32 /u/sciteam/park2/masters/serpent/temp-800-1300/msfr-full-core-temp-800-1300
 
 ### For more information see the man page for aprun

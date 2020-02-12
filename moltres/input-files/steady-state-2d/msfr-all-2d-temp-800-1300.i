@@ -604,7 +604,7 @@ ini_neut=1e14
 [Materials]
   [./core]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_core_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_core_'
     interp_type = 'spline'
     prop_names = 'cp rho k mu'
     prop_values = '1555 4.12487e-3 731.77 4.001e-1'
@@ -612,7 +612,7 @@ ini_neut=1e14
   [../]
   [./blanket]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_blanket_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_blanket_'
     interp_type = 'spline'
     prop_names = 'cp rho k'
     prop_values = '1555 4.12487e-3 1.0097e-2'
@@ -620,7 +620,7 @@ ini_neut=1e14
   [../]
   [./absorb]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_absorb_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_absorb_'
     interp_type = 'spline'
     prop_names = 'cp rho k'
     prop_values = '1064 2.52e-3 .295'
@@ -628,7 +628,7 @@ ini_neut=1e14
   [../]
   [./struc]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_struc_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_struc_'
     interp_type = 'spline'
     prop_names = 'cp rho k'
     prop_values = '427 1e-2 .236'
@@ -636,7 +636,7 @@ ini_neut=1e14
   [../]
   [./hx]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_hx_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_hx_'
     interp_type = 'spline'
     prop_names = 'cp rho k'
     prop_values = '1555 4.12487e-3 1.0097e-2'
@@ -644,7 +644,7 @@ ini_neut=1e14
   [../]
   [./inlet_outlet]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_inlet_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_inlet_'
     interp_type = 'spline'
     prop_names = 'cp rho k'
     prop_values = '1555 4.12487e-3 1.0097e-2'
@@ -861,7 +861,7 @@ ini_neut=1e14
   l_max_its = 50
 
   dtmin = 1e-6
-  dtmax = 2e-2
+  dtmax = 5e-2
   # dt = 1e-3
   [./TimeStepper]
     type = IterationAdaptiveDT
@@ -1002,7 +1002,7 @@ ini_neut=1e14
   [./my_checkpoint]
     type = Checkpoint
     num_files = 2
-    interval = 5
+    interval = 3
   [../]
 []
 
@@ -1016,7 +1016,7 @@ ini_neut=1e14
     app_type = MoltresApp
     execute_on = timestep_begin
     positions = '500.0 500.0 0.0'
-    input_files = 'sub-all-2d.i'
+    input_files = 'sub-all-2d-temp-800-1300.i'
   [../]
 []
 

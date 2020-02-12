@@ -18,7 +18,7 @@ pre_scale=1e-12    # precursor scaling factor
 #  nx = 2000
 #  xmax = 225.5
 #  elem_type = EDGE2
-   file = 'msfr-all-2d-no-decay-heat_out_loopApp0.e' # noalloc queue
+   file = 'msfr-all-2d-no-decay-heat-temp-800-1300_out_loopApp0.e' # noalloc queue
 #    file = '../msfr-all-2d_out_loopApp0.e'
 [../]
 
@@ -94,7 +94,7 @@ pre_scale=1e-12    # precursor scaling factor
 [Materials]
   [./hx]
     type = GenericMoltresMaterial
-    property_tables_root = '../../data/xs-data-ures/group/msfr_full_core_hx_'
+    property_tables_root = '../../data/xs-data-temp/group/msfr_full_core_hx_'
     interp_type = 'spline'
     prop_names = 'cp rho k'
     prop_values = '1555 4.12487e-3 1.0097e-2'

@@ -665,7 +665,7 @@ ini_neut=1e14
   l_max_its = 50
 
   dtmin = 1e-6
-  dtmax = 2e-2
+  dtmax = 5e-2
   # dt = 1e-3
   [./TimeStepper]
     type = IterationAdaptiveDT

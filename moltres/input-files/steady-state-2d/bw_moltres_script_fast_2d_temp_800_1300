@@ -1,10 +1,10 @@
 #!/bin/bash
-#PBS -l nodes=32:ppn=32:xe
-#PBS -l walltime=00:15:00
-#PBS -A bbcc
-#PBS -N full_core
+#PBS -l nodes=8:ppn=32:xe
+#PBS -l walltime=06:00:00
+#PBS -N masters-loop
 #PBS -j oe
-#PBS -q debug
+#PBS -A bbcc
+#PBS -q normal
 
 # NOTE: lines that begin with "#PBS" are not interpreted by the shell but ARE
 # used by the batch system, wheras lines that begin with multiple # signs,
@@ -40,8 +40,11 @@ cd $PBS_O_WORKDIR
 ### with 2 OMP threads 1 per integer core.
 
 ### NOTE: (the "in" file must exist for input)
-module swap PrgEnv-cray PrgEnv-gnu
-export OMP_NUM_THREADS=32
-aprun -n 32 -d 32  /projects/sciteam/bahg/serpent30/src/sss2 -omp 32 /u/sciteam/park2/masters/serpent/msfr-full-core-973
+source /u/sciteam/park2/projects/source_me_for_MOOSE
+# source /u/sciteam/park2/source_me_for_MOOSE2
+# export OMP_NUM_THREADS=32
+#aprun -n 1024 /projects/sciteam/bahg/projects/moltres_new/moltres-opt -i /u/sciteam/park2/masters/moltres/input-files/msfr-loop-scaling.i
+aprun -n 256 /u/sciteam/park2/projects/decay-moltres/moltres-opt -i /u/sciteam/park2/masters/moltres/input-files/steady-state-2d/msfr-all-2d-temp-800-1300.i --recover
+# aprun -n 256 /u/sciteam/park2/projects/decay-moltres/moltres-opt -i /u/sciteam/park2/masters/moltres/input-files/msfr-ins-2d.i
 
 ### For more information see the man page for aprun

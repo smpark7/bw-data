@@ -218,5 +218,5 @@ set power 3e9
 %dr -6 void
 %dn 1 0 226.5 453 0 360 1 212.25 213.25 1
 
-set acelib "/projects/sciteam/bahg/serpent/xsdata/jeff312/sss_jeff312.xsdata"
+set acelib "/projects/sciteam/bbcc/serpent/xsdata/jeff312/sss_jeff312.xsdata"
 

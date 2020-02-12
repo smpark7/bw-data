@@ -1,10 +1,9 @@
 #!/bin/bash
 #PBS -l nodes=32:ppn=32:xe
-#PBS -l walltime=00:15:00
-#PBS -A bbcc
+#PBS -l walltime=00:30:00
 #PBS -N full_core
 #PBS -j oe
-#PBS -q debug
+#PBS -q noalloc
 
 # NOTE: lines that begin with "#PBS" are not interpreted by the shell but ARE
 # used by the batch system, wheras lines that begin with multiple # signs,
@@ -42,6 +41,6 @@ cd $PBS_O_WORKDIR
 ### NOTE: (the "in" file must exist for input)
 module swap PrgEnv-cray PrgEnv-gnu
 export OMP_NUM_THREADS=32
-aprun -n 32 -d 32  /projects/sciteam/bahg/serpent30/src/sss2 -omp 32 /u/sciteam/park2/masters/serpent/msfr-full-core-973
+aprun -n 32 -d 32  /projects/sciteam/bahg/serpent30/src/sss2 -omp 32 /u/sciteam/park2/masters/serpent/ures/msfr-full-core-ures-flux
 
 ### For more information see the man page for aprun
