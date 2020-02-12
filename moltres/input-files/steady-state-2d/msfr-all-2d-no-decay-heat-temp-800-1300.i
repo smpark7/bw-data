@@ -1,9 +1,6 @@
-flow_velocity=112.75 # cm/s
-pre_flow_velocity=112.75
 nt_scale=1e-14     # neutron flux scaling factor
 pre_scale=1e-11    # precursor scaling factor
 ini_temp=953     # initial temp
-diri_temp=923    # dirichlet BC temp
 ini_neut=1e14
 
 [GlobalParams]
@@ -23,7 +20,7 @@ ini_neut=1e14
 []
 
 [Mesh]
-  file = 'msfr-all-2d-no-decay-heat-temp-800-1300_exodus.e' # noalloc queue
+  file = 'msfr-all-2d-no-decay-heat-temp-800-1300_exodus.e'
   # file = '../msfr-all-2d_exodus.e'
   # file = 'msfr-ins-2d_exodus.e'
 [../]
@@ -112,11 +109,9 @@ ini_neut=1e14
     var_name_base = pre
     block = 'core'
     outlet_boundaries = 'core_outlet'
-    # prec_scale = 1
     constant_velocity_values = false
     uvel = ux
     vvel = uy
-    # wvel = uz
     nt_exp_form = false
     family = MONOMIAL
     order = CONSTANT
@@ -127,7 +122,6 @@ ini_neut=1e14
     inlet_boundaries = 'core_inlet'
     scaling = ${pre_scale}
     init_from_file = true
-    # jac_test = true
   [../]
 []
 
@@ -348,7 +342,6 @@ ini_neut=1e14
     variable = temp
     u = ux
     v = uy
-    # w = uz
     block = 'core'
   [../]
   
@@ -358,7 +351,6 @@ ini_neut=1e14
     variable = p
     u = ux
     v = uy
-    # w = uz
     p = p
     block = 'core'
   [../]
@@ -377,7 +369,6 @@ ini_neut=1e14
     variable = ux
     u = ux
     v = uy
-    # w = uz
     p = p
     component = 0
     block = 'core'
@@ -387,7 +378,6 @@ ini_neut=1e14
     variable = uy
     u = ux
     v = uy
-    # w = uz
     p = p
     component = 1
     block = 'core'
@@ -515,7 +505,6 @@ ini_neut=1e14
 [Functions]
   [./velFunc]
     type = ParsedFunction
-    # value = '-508.5025 * 4 * ((y - 100) / 18.75 - ((y - 100) / 18.75)^2) * (1 - exp(-t/5))'
     value = '-508.5025 * 4 * ((y - 100) / 18.75 - ((y - 100) / 18.75)^2) * (1)'
   [../]
 []
@@ -581,7 +570,6 @@ ini_neut=1e14
     variable = pre1
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre2_outlet]
     type = CoupledOutflowBC
@@ -589,7 +577,6 @@ ini_neut=1e14
     variable = pre2
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre3_outlet]
     type = CoupledOutflowBC
@@ -597,7 +584,6 @@ ini_neut=1e14
     variable = pre3
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre4_outlet]
     type = CoupledOutflowBC
@@ -605,7 +591,6 @@ ini_neut=1e14
     variable = pre4
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre5_outlet]
     type = CoupledOutflowBC
@@ -613,7 +598,6 @@ ini_neut=1e14
     variable = pre5
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre6_outlet]
     type = CoupledOutflowBC
@@ -621,7 +605,6 @@ ini_neut=1e14
     variable = pre6
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre7_outlet]
     type = CoupledOutflowBC
@@ -629,7 +612,6 @@ ini_neut=1e14
     variable = pre7
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
   [./pre8_outlet]
     type = CoupledOutflowBC
@@ -637,18 +619,12 @@ ini_neut=1e14
     variable = pre8
     uvel = ux
     vvel = uy
-    # wvel = uz
   [../]
 []
 
 [Executioner]
   type = Transient
   end_time = 2000
-
-  # verbose = true
-
-  # automatic_scaling = true
-  # compute_scaling_once = false
 
   nl_rel_tol = 1e-8
   nl_abs_tol = 1e-1
@@ -658,15 +634,12 @@ ini_neut=1e14
   petsc_options_iname = '-pc_type -pc_factor_shift_type -pc_factor_mat_solver_package'
   petsc_options_value = 'lu       NONZERO               superlu_dist'
   line_search = 'none'
-   # petsc_options_iname = '-snes_type'
-  # petsc_options_value = 'test'
 
   nl_max_its = 20
   l_max_its = 50
 
   dtmin = 1e-6
-  dtmax = 1e-2
-  # dt = 1e-3
+  dtmax = 1e-1
   [./TimeStepper]
     type = IterationAdaptiveDT
     dt = 1e-6 # 1e-4

@@ -113,15 +113,11 @@ pre_scale=1e-12    # precursor scaling factor
   petsc_options_iname = '-pc_type -pc_factor_shift_type'
   petsc_options_value = 'lu       NONZERO'
   line_search = 'none'
-   # petsc_options_iname = '-snes_type'
-  # petsc_options_value = 'test'
 
   nl_max_its = 20
   l_max_its = 50
 
   dtmin = 1e-6
-  # dtmax = 1
-  # dt = 1e-3
   [./TimeStepper]
     type = IterationAdaptiveDT
     dt = 1 # 1e-1
