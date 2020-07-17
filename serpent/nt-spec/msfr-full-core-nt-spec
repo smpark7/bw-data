@@ -1,0 +1,179 @@
+% --- MSFR
+
+set title "MSFR full core"
+
+/************************
+ * Material definitions *
+ ************************/
+
+% --- Fuel salt
+
+mat fuel9     	-4.1249 	tmp 973
+92233.09c       -0.0673645              % U-233
+90232.09c       -0.5162987              % Th-232
+3007.09c        -0.0607570              % Li-7
+9019.09c        -0.3555798              % F-19
+
+% --- Blanket salt
+
+mat blanket9     -4.1249 	tmp 973
+90232.09c	-0.5835662		% Th-232
+3007.09c	-0.0606484		% Li-7
+9019.09c	-0.3557854		% F-19
+
+% --- Structural material
+
+mat struc9     	-10 		tmp 973
+
+% Ni
+28058.09c 54.074843
+28060.09c 20.829533
+28061.09c 0.905445
+28062.09c 2.886956
+28064.09c 0.735223
+
+% W
+%74180.09c 0.011971
+74182.09c 2.643640
+74183.09c 1.427566
+74184.09c 3.056646
+74186.09c 2.836177
+
+% Cr
+24050.09c 0.348208
+24052.09c 6.714850
+24053.09c 0.761410
+24054.09c 0.189531
+
+% Mo
+42092.09c 0.107817
+42094.09c 0.067616
+42095.09c 0.116825
+42096.09c 0.122713
+42097.09c 0.070524
+42098.09c 0.178789
+42100.09c 0.071716
+
+% Fe
+26054.09c 0.036940
+26056.09c 0.579885
+26057.09c 0.013392
+26058.09c 0.001782
+
+% Ti
+22046.09c 0.024338
+22047.09c 0.021948
+22048.09c 0.217474
+22049.09c 0.015960
+22050.09c 0.015281
+
+% C
+6000.09c 0.2940000
+
+% Mn
+25055.09c 0.257000
+
+% Si
+14028.09c 0.232321
+14029.09c 0.011841
+14030.09c 0.007837
+
+% Al
+13027.09c 0.052000
+
+% B
+5010.09c 0.006732
+5011.09c 0.026268
+
+% P
+15031.09c 0.023000
+
+% S
+16032.09c 0.003776
+16033.09c 0.000032
+16034.09c 0.000191
+16036.09c 0.000001
+
+% --- Boron carbide absorber
+
+mat absorb9	-2.52 		tmp 973
+5010.09c    -14.35110139            % B-10
+5011.09c    -63.91353615            % B-11
+6000.09c    -21.73536246            % Natural C
+
+/************************
+ * Geometry definitions *
+ ************************/
+
+% --- Surfaces
+
+surf 1001 pz 0.0		% Bottom surface
+surf 1002 pz 100.0      % Core bottom surface
+surf 1003 pz 118.75     % Blanket bottom outer surface
+surf 1004 pz 120.75     % Blanket bottom inner surface
+surf 1005 pz 304.75     % Blanket top inner surface
+surf 1006 pz 306.75     % Blanket top outer surface
+surf 1007 pz 325.5      % Core top surface
+surf 1008 pz 425.5      % Top surface
+
+surf 2001 cyl 0.0 0.0 112.75		% Blanket outer surface, fuel side
+surf 2002 cyl 0.0 0.0 114.75		% Blanket inner surface, fuel side
+surf 2003 cyl 0.0 0.0 160.75		% Blanket inner surface, boron side
+surf 2004 cyl 0.0 0.0 162.75		% Blanket outer surface, boron side/absorber boundary
+surf 2005 cyl 0.0 0.0 182.75		% Absorber outer surface
+surf 2006 cyl 0.0 0.0 206.5 		% HX outer surface
+surf 2007 cyl 0.0 0.0 226.5 		% Struc outer surface
+
+surf 3001 inf
+
+% --- Cells
+
+cell 101 0 fill 1 1002 -1007 -2001		    % Fuel core
+
+cell 201 0 fill 3 1004 -1005 2002 -2003	    % Blanket
+
+cell 301 0 fill 2 1003 -1006 2001 -2002	    % Blanket tank inner
+cell 302 0 fill 2 1003 -1006 2003 -2004	    % Blanket tank outer
+cell 303 0 fill 2 1003 -1004 2002 -2003	    % Blanket tank bottom
+cell 304 0 fill 2 1005 -1006 2002 -2003	    % Blanket tank top
+
+cell 401 0 fill 4 1003 -1006 2004 -2005		% Absorber
+
+cell 501 0 fill 6 1003 -1006 2005 -2006		% HX and pump
+
+cell 601 0 fill 2 1002 -1007 2006 -2007     % Outer reflector
+cell 602 0 fill 2 1001 -1002 -2007          % Bottom reflector
+cell 603 0 fill 2 1007 -1008 -2007          % Top reflector
+
+cell 701 0 fill 5 1002 -1003 2001 -2006     % Inlet
+cell 702 0 fill 6 1006 -1007 2001 -2006     % Outlet
+
+cell 801 0 outside -1001 -2007		% Bottom
+cell 802 0 outside 1008 -2007		% Top
+cell 803 0 outside 2007			% Cylinder
+
+cell 901 1 fuel9     -3001	% Fuel material
+cell 902 2 struc9	-3001	% Structural material
+cell 903 3 blanket9	-3001	% Blanket material
+cell 904 4 absorb9	-3001	% Absorber material
+cell 905 5 fuel9     -3001   % Inlet/Outlet
+cell 906 6 fuel9     -3001   % HX and pump
+
+/******************
+ * Run parameters *
+ ******************/
+
+% --- Neutron population
+
+set pop 200000 500 50
+
+% --- Group constant generation
+
+set gcu 1
+set nfg  6	748.5e-6	5.5308e-3	24.7875e-3	0.4979	2.2313
+set power 3e9
+set micro nj20
+
+set acelib "/projects/sciteam/bbcc/serpent/xsdata/jeff312/sss_jeff312.xsdata"
+set ures 1
+
